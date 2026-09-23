@@ -130,16 +130,11 @@ export function Dashboard() {
             <small>Model evaluation studio</small>
           </span>
         </a>
-        <div className="header-note">
-          <span className="live-dot" aria-hidden="true" />
-          Three models · four metrics
-        </div>
       </header>
 
       <div className="workspace">
-        <aside className="sidebar" aria-label="Dashboard sections">
-          <p className="eyebrow">Your activity</p>
-          <nav className="section-nav" role="tablist" aria-orientation="vertical">
+        <nav className="top-tabs" aria-label="Dashboard sections">
+          <div className="section-nav" role="tablist" aria-orientation="horizontal">
             {SECTIONS.map((section) => (
               <button
                 id={`tab-${section.id}`}
@@ -155,15 +150,8 @@ export function Dashboard() {
                 {section.label}
               </button>
             ))}
-          </nav>
-          <div className="privacy-note">
-            <span aria-hidden="true">◇</span>
-            <div>
-              <strong>Private by default</strong>
-              <p>Your uploads stay inside this browser session and expire automatically.</p>
-            </div>
           </div>
-        </aside>
+        </nav>
 
         <main id="main" tabIndex={-1}>
           <section

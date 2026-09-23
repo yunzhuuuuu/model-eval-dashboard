@@ -5,16 +5,90 @@ type IntroductionProps = {
 export function IntroductionSection({ onContinue }: IntroductionProps) {
   return (
     <div className="section-stack">
-      <section className="hero-card">
-        <div className="hero-copy">
-          <p className="eyebrow">Retrieval model evaluation</p>
-          <h1>What makes a note easy for a model to find?</h1>
-          <p className="hero-lede">
-            Explore real retrieval datasets, compare three embedding models, and
-            design a dataset of your own—no coding required.
+      <header className="page-heading intro-heading">
+        <p className="eyebrow">Introduction</p>
+        <h1>Retrieval Model Evaluation Dashboard</h1>
+        <p>
+          Explore how dataset design influences retrieval-model performance,
+          then create and evaluate a dataset of your own—no coding required.
+        </p>
+      </header>
+
+      <section className="content-card intro-section intro-objectives">
+        <div className="section-heading">
+          <p className="eyebrow">Learning objectives</p>
+          <h2>What you will learn</h2>
+          <p>
+            This dashboard is designed to help students explore how dataset
+            design influences the performance of retrieval models.
           </p>
         </div>
-        <div className="retrieval-visual" aria-label="A question is matched to its most relevant note">
+        <ul className="learning-list">
+          <li>
+            <span>01</span>
+            <div>
+              <h3>Understand evaluation metrics</h3>
+              <p>
+                Read Recall@1, Recall@3, Mean Rank, and MRR, then use them to
+                compare model performance.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <h3>Investigate dataset effects</h3>
+              <p>
+                See how wording, topic, and dataset structure can change
+                retrieval accuracy.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <h3>Design your own test</h3>
+              <p>
+                Create realistic notes and questions, upload the two CSV files,
+                and evaluate three models.
+              </p>
+            </div>
+          </li>
+        </ul>
+        <p className="no-code-note">
+          You only need Excel or Google Sheets—the activity does not involve coding.
+        </p>
+      </section>
+
+      <section className="content-card intro-section intro-background">
+        <div className="intro-copy">
+          <p className="eyebrow">Background</p>
+          <h2>From EchoMinds to this lab</h2>
+          <p>
+            In summer 2025, Olin College students developed EchoMinds, a
+            note-taking application designed to support people who are blind or
+            visually impaired. Users save information as notes, then retrieve it
+            later by asking natural-language questions.
+          </p>
+          <p>
+            Instead of requiring exact keywords, an embedding model looks for
+            notes with similar meaning. This dashboard lets you test how reliably
+            different models find the human-labeled correct note.
+          </p>
+          <a
+            className="text-link"
+            href="https://docs.google.com/document/d/1a8xVYLW7ON6jAQoaHGS5U2U93N3u8C0Y49vahNilTsk/edit?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Read the 2-page background
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
+        <div
+          className="retrieval-visual"
+          aria-label="A question is matched to its most relevant note"
+        >
           <div className="query-chip">
             <span>Question</span>
             What ingredients do I need for pasta?
@@ -35,73 +109,29 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
         </div>
       </section>
 
-      <section className="content-card">
-        <div className="section-heading">
-          <p className="eyebrow">Learning objectives</p>
-          <h2>By the end, you will be able to…</h2>
-        </div>
-        <div className="objective-grid">
-          <article>
-            <span className="objective-number">01</span>
-            <h3>Read retrieval metrics</h3>
-            <p>
-              Understand Recall@1, Recall@3, Mean Rank, and MRR, then use them
-              to compare model performance.
-            </p>
-          </article>
-          <article>
-            <span className="objective-number">02</span>
-            <h3>Spot dataset effects</h3>
-            <p>
-              Investigate how the wording, topic, and structure of a dataset
-              change retrieval accuracy.
-            </p>
-          </article>
-          <article>
-            <span className="objective-number">03</span>
-            <h3>Design your own test</h3>
-            <p>
-              Build a realistic note-and-question dataset, upload it, and
-              evaluate it across three models.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section className="story-grid">
-        <article className="content-card">
-          <p className="eyebrow">Background</p>
-          <h2>From EchoMinds to this lab</h2>
-          <p>
-            In summer 2025, Olin College students developed EchoMinds, a
-            note-taking application designed to support people who are blind or
-            visually impaired. Users save information as notes, then retrieve it
-            later by asking natural-language questions.
-          </p>
-          <p>
-            Instead of requiring exact keywords, an embedding model looks for
-            notes with similar meaning. This dashboard lets you test how reliably
-            different models find the human-labeled correct note.
-          </p>
-        </article>
-        <article className="content-card task-card">
+      <section className="content-card intro-section task-card">
+        <div className="intro-task-copy">
           <p className="eyebrow">Your task</p>
           <h2>Explore, create, compare</h2>
-          <ol className="task-list">
-            <li>
-              <span>1</span>
-              Browse an example dataset and inspect question-note pairs.
-            </li>
-            <li>
-              <span>2</span>
-              Create two CSV files about a topic you choose.
-            </li>
-            <li>
-              <span>3</span>
-              Upload them and compare the model results.
-            </li>
-          </ol>
-        </article>
+          <p>
+            Create and evaluate your own dataset for a note-taking application.
+            Start by exploring examples, then build a scenario of your own.
+          </p>
+        </div>
+        <ol className="task-list">
+          <li>
+            <span>1</span>
+            Browse an example dataset and inspect question-note pairs.
+          </li>
+          <li>
+            <span>2</span>
+            Create two CSV files about a topic you choose.
+          </li>
+          <li>
+            <span>3</span>
+            Upload them and compare the model results.
+          </li>
+        </ol>
       </section>
 
       <section className="intro-next-step" aria-labelledby="intro-next-step-title">
@@ -114,15 +144,6 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
           </p>
         </div>
         <div className="intro-next-actions">
-          <a
-            className="text-link"
-            href="https://docs.google.com/document/d/1a8xVYLW7ON6jAQoaHGS5U2U93N3u8C0Y49vahNilTsk/edit?usp=sharing"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Read the 2-page background
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
           <button type="button" className="button primary" onClick={onContinue}>
             Start with an example
             <span aria-hidden="true">→</span>
