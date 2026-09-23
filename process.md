@@ -68,7 +68,7 @@ The new interface will additionally show job progress, recoverable failures, and
 - [x] Commit the reviewed source locally.
 - [x] Push the reviewed source to GitHub.
 - [x] Deploy and verify the Vercel production application.
-- [ ] Connect GitHub worker secrets and verify a scheduled production run.
+- [x] Connect GitHub worker secrets and verify a scheduled production run.
 
 ## Verification
 
@@ -97,7 +97,7 @@ npm run check:web
 - The production site is live at `https://retrieval-model-lab.vercel.app`.
 - A production smoke test created a session, uploaded both private CSVs, queued an evaluation, and completed all three model results through the worker.
 - A second session could not list or fetch the first session's dataset, and a cross-origin write was rejected.
-- A five-minute GitHub Actions workflow is implemented; repository secrets and a live scheduled run still need verification.
+- The five-minute GitHub Actions worker has its encrypted secrets and completed a manual production run successfully.
 
 ## Change log
 
@@ -107,3 +107,4 @@ npm run check:web
 - 2026-09-23: Completed Stage 4 with all four Next.js sections, signed anonymous sessions, direct private uploads, browser CSV validation, job polling, example-data export, selectable results, 5 frontend tests, and a passing production build.
 - 2026-09-23: Released the Vercel web app with Neon and private Blob, verified production isolation, and completed a three-model production smoke evaluation through the worker.
 - 2026-09-23: Added a bounded queue-drain mode and five-minute GitHub Actions worker workflow.
+- 2026-09-23: Connected encrypted GitHub worker secrets and verified the queue-drain workflow against production.

@@ -1,5 +1,7 @@
 # Retrieval Model Evaluation Dashboard
 
+**Live app:** <https://retrieval-model-lab.vercel.app>
+
 A website for learning how retrieval-based machine learning systems work, hands-on. Students will:
 
 1. **Learn about sentence embeddings and retrieval models** — how a machine learning model converts text into numerical vectors, and how similarity between those vectors is used to find the right answer to a question.
@@ -23,7 +25,6 @@ A website for learning how retrieval-based machine learning systems work, hands-
 
 The original Streamlit app remains in `app.py` as a reference while the new release is verified.
 
-The production web app is available at <https://retrieval-model-lab.vercel.app>.
 
 ## Run the web app locally
 
@@ -98,3 +99,8 @@ workflow runs every five minutes; evaluations can wait for the next scheduled
 run before processing begins.
 
 The deployment and live service checks are tracked in `process.md`.
+
+## Legacy Streamlit version
+
+The earlier Streamlit deployment is preserved at
+<https://model-eval-dashboard.streamlit.app>.
