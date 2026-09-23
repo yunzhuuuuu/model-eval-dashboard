@@ -13,25 +13,78 @@ A website for learning how retrieval-based machine learning systems work, hands-
 - **Compare 3 embedding models** — `gemini-embedding-001`, `all-mpnet-base-v2`, and `multi-qa-MiniLM-L6-dot-v1`, evaluated side by side
 - **Multiple evaluation metrics** — Recall@1, Recall@3, Mean Rank, and MRR, with plain-language explanations and column tooltips built into the app
 
-## How to run locally
+## Architecture
 
-1. Get a Gemini API key
-- Visit https://aistudio.google.com/api-keys and create an API key.
-- Create a `.streamlit/secrets.toml` file:
-   ```
-   GEMINI_API_KEY="your_key_here"
+- **Next.js web app:** the student interface and authenticated API routes, designed for Vercel.
+- **Postgres:** anonymous sessions, private dataset records, job progress, and results.
+- **Vercel Blob:** direct browser uploads to private object storage.
+- **Python worker:** persistent evaluation process for Gemini and the two SentenceTransformer models.
+- **Static examples:** the existing SQuAD, Assistive Technology, and Cooking datasets ship with the web app.
+
+The original Streamlit app remains in `app.py` as a reference while the new release is verified.
+
+## Run the web app locally
+
+1. Install the Node dependencies:
+
+   ```sh
+   npm ci
    ```
 
-2. Install dependencies
-   ```
-   pip install -r requirements.txt
+2. Copy `.env.example` to `.env.local` and provide:
+
+   - `DATABASE_URL` for a Postgres database.
+   - `SESSION_SECRET` with at least 32 random characters.
+   - `BLOB_READ_WRITE_TOKEN` for a private Vercel Blob store.
+
+   Never commit the populated environment file.
+
+3. Apply `migrations/001_initial.sql` to the database.
+
+4. Start the site:
+
+   ```sh
+   npm run dev
    ```
 
-3. Run streamlit
-   ```
-   streamlit run app.py
-   ```
+The interface is available at `http://localhost:3000`. The preloaded examples work without private storage; uploads require the database and Blob settings above.
 
-## How to host the website
+## Run the evaluation worker
 
-See the full setup guide: https://docs.google.com/document/d/1EqBUNnkiXQ5mIU2FAirTw3ojkQQJi1qUmd1vXgxq0vI/edit?usp=sharing
+The worker needs the same `DATABASE_URL` and `BLOB_READ_WRITE_TOKEN`, plus a server-side `GEMINI_API_KEY`.
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r worker-requirements.txt
+python -m worker
+```
+
+The worker is intentionally separate from Vercel so the SentenceTransformer models can remain loaded between jobs. `worker.Dockerfile` provides the production container.
+
+## Verification
+
+```sh
+make test
+npm run lint
+npm run typecheck
+npm run test:web
+npm run build
+```
+
+Regenerate the deployable example JSON after changing the local example data or embeddings:
+
+```sh
+npm run export:shared
+```
+
+## Deploy
+
+1. Import this repository into Vercel.
+2. Connect a Marketplace Postgres provider and a **private** Vercel Blob store.
+3. Add `DATABASE_URL`, `SESSION_SECRET`, and `BLOB_READ_WRITE_TOKEN` to the Vercel project.
+4. Apply the database migration.
+5. Deploy the Python worker to a persistent container host with the worker environment variables.
+6. Verify a preview deployment before promoting it to production.
+
+The deployment and live service checks are tracked in `process.md`.

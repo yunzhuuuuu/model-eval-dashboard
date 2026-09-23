@@ -54,17 +54,18 @@ The new interface will additionally show job progress, recoverable failures, and
 
 ### Stage 4 - Next.js interface
 
-- [ ] Rebuild all four existing sections.
-- [ ] Implement direct CSV uploads and validation feedback.
-- [ ] Add job progress, completion, and failure views.
-- [ ] Recreate the dataset explorer and metric result tables.
+- [x] Rebuild all four existing sections.
+- [x] Implement direct CSV uploads and validation feedback.
+- [x] Add job progress, completion, and failure views.
+- [x] Recreate the dataset explorer and metric result tables.
 
 ### Stage 5 - Verification and release
 
-- [ ] Confirm numerical parity on shared datasets.
+- [x] Confirm numerical parity on shared datasets.
 - [ ] Test concurrent users, ownership boundaries, failures, and cleanup.
-- [ ] Pass Python tests plus frontend lint, type-check, test, and production build.
-- [ ] Commit and push the reviewed source to GitHub.
+- [x] Pass Python tests plus frontend lint, type-check, test, and production build.
+- [x] Commit the reviewed source locally.
+- [ ] Push the reviewed source to GitHub.
 - [ ] Deploy a Vercel preview, verify it, and promote it to production.
 
 ## Verification
@@ -73,6 +74,12 @@ Run the framework-independent unit and local parity tests with:
 
 ```sh
 make test
+```
+
+Run the frontend lint, type-check, tests, and production build with:
+
+```sh
+npm run check:web
 ```
 
 ## Current findings
@@ -84,9 +91,12 @@ make test
 - The local folder did not contain Git metadata before Stage 1.
 - The Gemini secret file is local-only and must never enter version control.
 - The initial Postgres migration is authored but cannot be live-applied until a database is provisioned.
+- The Next.js site and static examples launch locally; private uploads correctly report that Postgres is unconfigured.
+- Live upload, ownership, cleanup, and worker integration still require provisioned Postgres and private Blob services.
 
 ## Change log
 
 - 2026-09-23: Created this process record and established feature parity as a release requirement.
 - 2026-09-23: Completed Stage 2 with framework-independent CSV, embedding, ranking, and metric modules plus 12 passing tests.
 - 2026-09-23: Completed Stage 3 with the Postgres job schema, private Blob adapter, restart-safe worker, cleanup and retry handling, memory-bounded scoring, and 21 passing tests.
+- 2026-09-23: Completed Stage 4 with all four Next.js sections, signed anonymous sessions, direct private uploads, browser CSV validation, job polling, example-data export, selectable results, 5 frontend tests, and a passing production build.

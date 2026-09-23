@@ -26,6 +26,7 @@ node_modules/
 .next/
 out/
 coverage/
+*.tsbuildinfo
 
 # Vercel's local project linkage
 .vercel/

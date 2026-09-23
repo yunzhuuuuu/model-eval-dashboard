@@ -1,0 +1,80 @@
+{
+  "assistive_tech": [
+    {
+      "modelName": "all-mpnet-base-v2",
+      "metrics": {
+        "Recall@1": 0.75,
+        "Recall@3": 0.95,
+        "Mean Rank": 1.95,
+        "MRR": 0.8531
+      }
+    },
+    {
+      "modelName": "multi-qa-MiniLM-L6-dot-v1",
+      "metrics": {
+        "Recall@1": 0.85,
+        "Recall@3": 0.95,
+        "Mean Rank": 1.75,
+        "MRR": 0.8955
+      }
+    }
+  ],
+  "cooking": [
+    {
+      "modelName": "gemini_3072",
+      "metrics": {
+        "Recall@1": 0.95,
+        "Recall@3": 1.0,
+        "Mean Rank": 1.05,
+        "MRR": 0.975
+      }
+    },
+    {
+      "modelName": "all-mpnet-base-v2",
+      "metrics": {
+        "Recall@1": 0.85,
+        "Recall@3": 0.95,
+        "Mean Rank": 1.35,
+        "MRR": 0.9017
+      }
+    },
+    {
+      "modelName": "multi-qa-MiniLM-L6-dot-v1",
+      "metrics": {
+        "Recall@1": 0.95,
+        "Recall@3": 0.95,
+        "Mean Rank": 1.3,
+        "MRR": 0.9571
+      }
+    }
+  ],
+  "squad_1_1": [
+    {
+      "modelName": "gemini_3072",
+      "metrics": {
+        "Recall@1": 0.8213,
+        "Recall@3": 0.9468,
+        "Mean Rank": 2.1513,
+        "MRR": 0.8872
+      }
+    },
+    {
+      "modelName": "all-mpnet-base-v2",
+      "metrics": {
+        "Recall@1": 0.6546,
+        "Recall@3": 0.8427,
+        "Mean Rank": 4.8545,
+        "MRR": 0.7606
+      }
+    },
+    {
+      "modelName": "multi-qa-MiniLM-L6-dot-v1",
+      "metrics": {
+        "Recall@1": 0.4667,
+        "Recall@3": 0.673,
+        "Mean Rank": 14.2104,
+        "MRR": 0.5946
+      }
+    }
+  ]
+}
