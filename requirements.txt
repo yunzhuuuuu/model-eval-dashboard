@@ -1,0 +1,8 @@
+gdown==6.1.0
+numpy==2.5.1
+pandas==3.0.3
+protobuf==7.35.1
+scikit_learn==1.9.0
+sentence_transformers==5.6.0
+streamlit==1.58.0
+google-genai

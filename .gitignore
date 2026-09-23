@@ -1,0 +1,40 @@
+.streamlit/secrets.toml
+__pycache__/
+.vscode/
+datasets/
+embeddings/
+data_and_embeddings.tar.gz
+ml_class_eval.py
+test.py
+
+# Local secrets and environment-specific configuration
+.env
+.env.*
+!.env.example
+
+# Python environments, caches, and generated files
+.venv/
+venv/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# Next.js / Node build output
+node_modules/
+.next/
+out/
+coverage/
+
+# Vercel's local project linkage
+.vercel/
+
+# Generated evaluation artifacts
+embeddings_test/
+uploads/
+results/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
