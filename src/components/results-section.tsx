@@ -214,8 +214,27 @@ export function ResultsSection({
                     <tr>
                       <th scope="col">Model</th>
                       {selectedMetrics.map((metric) => (
-                        <th scope="col" key={metric} title={METRIC_HELP[metric]}>
-                          {metric}
+                        <th scope="col" key={metric}>
+                          <span className="metric-header">
+                            <span>{metric}</span>
+                            <span className="metric-tooltip">
+                              <button
+                                type="button"
+                                className="metric-help-trigger"
+                                aria-label={`About ${metric}`}
+                                aria-describedby={`metric-help-${metric.replaceAll(" ", "-")}`}
+                              >
+                                ?
+                              </button>
+                              <span
+                                id={`metric-help-${metric.replaceAll(" ", "-")}`}
+                                className="metric-tooltip-content"
+                                role="tooltip"
+                              >
+                                {METRIC_HELP[metric]}
+                              </span>
+                            </span>
+                          </span>
                         </th>
                       ))}
                     </tr>

@@ -138,6 +138,19 @@ class WorkerServiceTests(unittest.TestCase):
         self.assertEqual(storage.deleted, ["private-blob"])
         self.assertEqual(repository.cleanup_completed, cleanup)
 
+    def test_drain_stops_when_queue_is_empty(self):
+        repository = FakeRepository(job=make_job())
+        service = WorkerService(
+            repository,
+            FakeProcessor(),
+            FakeBlobStore(),
+            lease_seconds=30,
+        )
+
+        self.assertEqual(service.run_until_idle(max_items=5), 1)
+        self.assertIsNotNone(repository.completed)
+        self.assertIsNone(repository.job)
+
 
 if __name__ == "__main__":
     unittest.main()

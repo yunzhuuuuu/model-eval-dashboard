@@ -13,21 +13,6 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
             Explore real retrieval datasets, compare three embedding models, and
             design a dataset of your own—no coding required.
           </p>
-          <div className="hero-actions">
-            <button type="button" className="button primary" onClick={onContinue}>
-              Start with an example
-              <span aria-hidden="true">→</span>
-            </button>
-            <a
-              className="text-link"
-              href="https://docs.google.com/document/d/1a8xVYLW7ON6jAQoaHGS5U2U93N3u8C0Y49vahNilTsk/edit?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Read the 2-page background
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </div>
         </div>
         <div className="retrieval-visual" aria-label="A question is matched to its most relevant note">
           <div className="query-chip">
@@ -117,6 +102,32 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
             </li>
           </ol>
         </article>
+      </section>
+
+      <section className="intro-next-step" aria-labelledby="intro-next-step-title">
+        <div>
+          <p className="eyebrow">Next step</p>
+          <h2 id="intro-next-step-title">See retrieval in action</h2>
+          <p>
+            Begin with a prepared dataset, then return to upload and compare
+            your own.
+          </p>
+        </div>
+        <div className="intro-next-actions">
+          <a
+            className="text-link"
+            href="https://docs.google.com/document/d/1a8xVYLW7ON6jAQoaHGS5U2U93N3u8C0Y49vahNilTsk/edit?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Read the 2-page background
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <button type="button" className="button primary" onClick={onContinue}>
+            Start with an example
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
       </section>
     </div>
   );

@@ -2,7 +2,7 @@
 
 ## Goal
 
-Move the public application from Streamlit to a Vercel-hosted Next.js app while preserving the existing learning and evaluation experience. Uploaded evaluations will run asynchronously through a persistent Python worker so the two local SentenceTransformer models can remain available.
+Move the public application from Streamlit to a Vercel-hosted Next.js app while preserving the existing learning and evaluation experience. Uploaded evaluations run asynchronously through a scheduled Python worker.
 
 ## Feature-parity requirements
 
@@ -24,7 +24,7 @@ The new interface will additionally show job progress, recoverable failures, and
 - **Web:** Next.js with TypeScript, deployed through Vercel.
 - **Uploads:** Private object storage, uploaded directly by the browser.
 - **State:** Postgres records for anonymous sessions, datasets, jobs, progress, and results.
-- **Evaluation:** Persistent Python worker with cached SentenceTransformer models and server-side Gemini credentials.
+- **Evaluation:** Scheduled GitHub Actions worker with cached SentenceTransformer downloads and server-side Gemini credentials.
 - **Privacy:** Signed anonymous-session cookie, unguessable identifiers, authorization checks, rate limits, and automatic data expiry.
 
 ## Stages
@@ -68,7 +68,7 @@ The new interface will additionally show job progress, recoverable failures, and
 - [x] Commit the reviewed source locally.
 - [x] Push the reviewed source to GitHub.
 - [x] Deploy and verify the Vercel production application.
-- [ ] Deploy the persistent Python evaluation worker.
+- [ ] Connect GitHub worker secrets and verify a scheduled production run.
 
 ## Verification
 
@@ -94,10 +94,10 @@ npm run check:web
 - The Gemini secret file is local-only and must never enter version control.
 - The initial Postgres migration is applied to a free Neon database in `iad1`.
 - A private Vercel Blob store is connected to production, preview, and development.
-- The production site is live at `https://model-eval-dashboard-black.vercel.app`.
+- The production site is live at `https://retrieval-model-lab.vercel.app`.
 - A production smoke test created a session, uploaded both private CSVs, queued an evaluation, and completed all three model results through the worker.
 - A second session could not list or fetch the first session's dataset, and a cross-origin write was rejected.
-- The worker is verified locally against production services but still needs a persistent container host for unattended jobs.
+- A five-minute GitHub Actions workflow is implemented; repository secrets and a live scheduled run still need verification.
 
 ## Change log
 
@@ -106,3 +106,4 @@ npm run check:web
 - 2026-09-23: Completed Stage 3 with the Postgres job schema, private Blob adapter, restart-safe worker, cleanup and retry handling, memory-bounded scoring, and 21 passing tests.
 - 2026-09-23: Completed Stage 4 with all four Next.js sections, signed anonymous sessions, direct private uploads, browser CSV validation, job polling, example-data export, selectable results, 5 frontend tests, and a passing production build.
 - 2026-09-23: Released the Vercel web app with Neon and private Blob, verified production isolation, and completed a three-model production smoke evaluation through the worker.
+- 2026-09-23: Added a bounded queue-drain mode and five-minute GitHub Actions worker workflow.

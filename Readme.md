@@ -18,12 +18,12 @@ A website for learning how retrieval-based machine learning systems work, hands-
 - **Next.js web app:** the student interface and authenticated API routes, designed for Vercel.
 - **Postgres:** anonymous sessions, private dataset records, job progress, and results.
 - **Vercel Blob:** direct browser uploads to private object storage.
-- **Python worker:** persistent evaluation process for Gemini and the two SentenceTransformer models.
+- **Python worker:** scheduled GitHub Actions job for Gemini and the two SentenceTransformer models.
 - **Static examples:** the existing SQuAD, Assistive Technology, and Cooking datasets ship with the web app.
 
 The original Streamlit app remains in `app.py` as a reference while the new release is verified.
 
-The production web app is available at <https://model-eval-dashboard-black.vercel.app>.
+The production web app is available at <https://retrieval-model-lab.vercel.app>.
 
 ## Run the web app locally
 
@@ -63,7 +63,9 @@ pip install -r worker-requirements.txt
 python -m worker
 ```
 
-The worker is intentionally separate from Vercel so the SentenceTransformer models can remain loaded between jobs. `worker.Dockerfile` provides the production container.
+The worker is intentionally separate from Vercel. Run `python -m worker` for
+continuous local polling, or `python -m worker --drain` to process the current
+queue and exit, as the scheduled GitHub workflow does.
 
 ## Verification
 
@@ -87,11 +89,12 @@ npm run export:shared
 2. Connect a Marketplace Postgres provider and a **private** Vercel Blob store.
 3. Add `DATABASE_URL`, `SESSION_SECRET`, and `BLOB_READ_WRITE_TOKEN` to the Vercel project.
 4. Apply the database migration.
-5. Deploy the Python worker to a persistent container host with the worker environment variables.
+5. Add the worker variables as GitHub repository secrets and enable the scheduled workflow.
 6. Verify a preview deployment before promoting it to production.
 
 The Vercel web app, free Neon database, private Blob store, migration, and a
-complete three-model smoke evaluation are verified. A persistent host for the
-Python worker is still required before unattended evaluations are available.
+complete three-model smoke evaluation are verified. The scheduled worker
+workflow runs every five minutes; evaluations can wait for the next scheduled
+run before processing begins.
 
 The deployment and live service checks are tracked in `process.md`.

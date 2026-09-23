@@ -18,15 +18,15 @@ a background worker, not a public web server.
 
 - PostgreSQL from a Vercel Marketplace provider such as Neon or Supabase.
 - A private Vercel Blob store.
-- A persistent worker host capable of caching the two local models.
+- GitHub Actions or a persistent worker host capable of running the two local models.
 
 Apply `migrations/001_initial.sql` to an empty PostgreSQL database before
 starting either the web app or worker.
 
 ## Configuration
 
-Copy the variable names from `.env.example` into the worker host's secret
-manager. Never commit their real values.
+Copy the variable names from `.env.example` into GitHub repository secrets or
+the worker host's secret manager. Never commit their real values.
 
 The required variables are:
 
@@ -36,12 +36,18 @@ The required variables are:
 
 ## Run
 
-Build `worker.Dockerfile` as a background-worker service. For a configured
-local environment, the equivalent command is:
+For a configured local environment, run continuously with:
 
 ```sh
 python -m worker
 ```
 
-The worker downloads the local model weights on first use and keeps the loaded
-models in memory for later jobs.
+For a scheduled or one-shot environment, process the current queue and exit:
+
+```sh
+python -m worker --drain --max-items 10
+```
+
+The GitHub workflow runs this bounded mode every five minutes and caches model
+downloads between runs. `worker.Dockerfile` remains available for a future
+continuous background-worker service.

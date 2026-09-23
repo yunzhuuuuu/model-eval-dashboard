@@ -39,7 +39,6 @@ export function Dashboard() {
   const [privateDatasets, setPrivateDatasets] = useState<DatasetSummary[]>([]);
   const [sharedDatasets, setSharedDatasets] =
     useState<DatasetSummary[]>(SHARED_DATASETS);
-  const [connectionError, setConnectionError] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const refreshDatasets = useCallback(async () => {
@@ -48,11 +47,8 @@ export function Dashboard() {
       const response = await fetch("/api/datasets", { cache: "no-store" });
       const payload = await responseJson<{ datasets: DatasetSummary[] }>(response);
       setPrivateDatasets(payload.datasets);
-      setConnectionError(null);
-    } catch (error) {
-      setConnectionError(
-        error instanceof Error ? error.message : "Could not load private datasets.",
-      );
+    } catch {
+      // Upload-specific guidance is shown in the upload section.
     } finally {
       setIsRefreshing(false);
     }
@@ -81,16 +77,9 @@ export function Dashboard() {
         const sessionPayload = await responseJson<SessionInfo>(sessionResponse);
         if (cancelled) return;
         setSession(sessionPayload);
-        setConnectionError(null);
         await refreshDatasets();
-      } catch (error) {
-        if (!cancelled) {
-          setConnectionError(
-            error instanceof Error
-              ? error.message
-              : "Private uploads are not available yet.",
-          );
-        }
+      } catch {
+        // Examples remain available; upload-specific guidance appears when needed.
       }
     }
     void start();
@@ -177,15 +166,6 @@ export function Dashboard() {
         </aside>
 
         <main id="main" tabIndex={-1}>
-          {connectionError && (
-            <div className="setup-banner" role="status">
-              <strong>Examples are ready.</strong>
-              <span>
-                Private uploads need the deployment services connected: {connectionError}
-              </span>
-            </div>
-          )}
-
           <section
             id={`panel-${activeSection}`}
             role="tabpanel"

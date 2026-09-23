@@ -134,6 +134,12 @@ class WorkerService:
 
         return False
 
+    def run_until_idle(self, max_items: int = 10) -> int:
+        processed = 0
+        while processed < max_items and self.run_once():
+            processed += 1
+        return processed
+
     def run_forever(
         self,
         stop_event: threading.Event,

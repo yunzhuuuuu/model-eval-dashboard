@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import logging
 import signal
 import threading
@@ -39,7 +40,27 @@ def build_service(config: WorkerConfig) -> WorkerService:
     )
 
 
-def main() -> None:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Run the evaluation worker.")
+    parser.add_argument(
+        "--drain",
+        action="store_true",
+        help="Process available work and exit instead of polling forever.",
+    )
+    parser.add_argument(
+        "--max-items",
+        type=int,
+        default=10,
+        help="Maximum jobs or cleanup requests handled in drain mode.",
+    )
+    args = parser.parse_args(argv)
+    if args.max_items < 1:
+        parser.error("--max-items must be at least 1")
+    return args
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = parse_args(argv)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
@@ -47,6 +68,14 @@ def main() -> None:
     config = WorkerConfig.from_env()
     service = build_service(config)
     stop_event = threading.Event()
+
+    if args.drain:
+        processed = service.run_until_idle(args.max_items)
+        logging.getLogger(__name__).info(
+            "Scheduled worker processed %s item(s)",
+            processed,
+        )
+        return
 
     def stop(_signal_number, _frame):
         logging.getLogger(__name__).info("Worker shutdown requested")

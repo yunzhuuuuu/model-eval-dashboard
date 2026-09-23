@@ -1357,6 +1357,114 @@ progress::-moz-progress-bar {
   margin-bottom: 1rem;
 }
 
+.intro-next-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border: 1px solid rgba(23, 37, 34, 0.1);
+  border-radius: var(--radius);
+  background: var(--teal-soft);
+  box-shadow: var(--shadow);
+  padding: clamp(1.35rem, 3vw, 2.3rem);
+  gap: 2rem;
+}
+
+.intro-next-step h2,
+.intro-next-step p {
+  margin-bottom: 0.35rem;
+}
+
+.intro-next-step > div:first-child {
+  flex: 1 1 320px;
+}
+
+.intro-next-step > div:first-child > p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.intro-next-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.metric-header {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.metric-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.metric-help-trigger {
+  display: inline-grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border: 1px solid #9ba8a3;
+  border-radius: 50%;
+  background: white;
+  padding: 0;
+  color: var(--teal-dark);
+  font-size: 0.7rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.metric-help-trigger:hover {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+}
+
+.metric-tooltip-content {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 0.55rem);
+  left: 50%;
+  width: 220px;
+  border-radius: 10px;
+  background: var(--ink);
+  box-shadow: 0 10px 24px rgba(23, 37, 34, 0.2);
+  padding: 0.65rem 0.75rem;
+  color: white;
+  font-size: 0.74rem;
+  font-weight: 550;
+  letter-spacing: normal;
+  line-height: 1.4;
+  opacity: 0;
+  pointer-events: none;
+  text-align: left;
+  text-transform: none;
+  transform: translate(-50%, -4px);
+  transition: opacity 130ms ease, transform 130ms ease;
+}
+
+.metric-tooltip:hover .metric-tooltip-content,
+.metric-tooltip:focus-within .metric-tooltip-content {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.results-table thead th:last-child .metric-tooltip-content {
+  right: 0;
+  left: auto;
+  transform: translateY(-4px);
+}
+
+.results-table thead th:last-child .metric-tooltip:hover .metric-tooltip-content,
+.results-table thead th:last-child .metric-tooltip:focus-within .metric-tooltip-content {
+  transform: translateY(0);
+}
+
+
 @media (max-width: 1000px) {
   .workspace {
     grid-template-columns: 1fr;
