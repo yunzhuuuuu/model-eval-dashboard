@@ -47,10 +47,10 @@ The new interface will additionally show job progress, recoverable failures, and
 
 ### Stage 3 - Durable job system
 
-- [ ] Define the database schema for sessions, datasets, jobs, and results.
-- [ ] Add private upload storage and retention rules.
-- [ ] Implement a restart-safe Python worker with progress and error reporting.
-- [ ] Add Gemini retry handling, rate limits, and job limits.
+- [x] Define the database schema for sessions, datasets, jobs, and results.
+- [x] Add private upload storage and retention rules.
+- [x] Implement a restart-safe Python worker with progress and error reporting.
+- [x] Add Gemini retry handling, rate limits, and job limits.
 
 ### Stage 4 - Next.js interface
 
@@ -83,8 +83,10 @@ make test
 - User isolation currently relies on a random session prefix in local filenames.
 - The local folder did not contain Git metadata before Stage 1.
 - The Gemini secret file is local-only and must never enter version control.
+- The initial Postgres migration is authored but cannot be live-applied until a database is provisioned.
 
 ## Change log
 
 - 2026-09-23: Created this process record and established feature parity as a release requirement.
 - 2026-09-23: Completed Stage 2 with framework-independent CSV, embedding, ranking, and metric modules plus 12 passing tests.
+- 2026-09-23: Completed Stage 3 with the Postgres job schema, private Blob adapter, restart-safe worker, cleanup and retry handling, memory-bounded scoring, and 21 passing tests.
