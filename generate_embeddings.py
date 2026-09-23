@@ -1,43 +1,43 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import os
-import time
 from google import genai
 from google.genai.errors import ClientError
-from csv import reader
 import streamlit as st
 
+from evaluation_core.datasets import load_csv_dataset
+from evaluation_core.embeddings import (
+    embed_gemini_batches,
+    encode_sentence_transformer,
+)
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 def gemini_embedded(texts, label):
     # get gemini embeddings
     BATCH_SIZE = 99   # max requests per minute is 100 for gemini free plan
-    all_embeddings = []
+    countdown_placeholder = None
 
-    for start in range(0, len(texts), BATCH_SIZE):
-        batch = texts[start:start + BATCH_SIZE]
+    def show_retry_countdown(remaining, _error):
+        nonlocal countdown_placeholder
+        if countdown_placeholder is None:
+            countdown_placeholder = st.empty()
+        countdown_placeholder.warning(
+            f"Gemini quota exceeded. Retrying in {remaining} seconds. Please don't leave the page."
+        )
 
-        while True:
-            try:
-                result = client.models.embed_content(
-                    model="gemini-embedding-001",
-                    contents=batch
-                )
-                break
-            except ClientError as e:
-                if "RESOURCE_EXHAUSTED" not in str(e):
-                    raise
-                countdown_placeholder = st.empty()
-                for remaining in range(60, 0, -1):
-                    countdown_placeholder.warning(
-                        f"Gemini quota exceeded. Retrying in {remaining} seconds. Please don't leave the page."
-                    )
-                    time.sleep(1)
-                countdown_placeholder.empty()
-        batch_embeddings = np.array([embedding.values for embedding in result.embeddings])
-        all_embeddings.append(batch_embeddings)
-    embeddings = np.concatenate(all_embeddings, axis=0)
+    embeddings = embed_gemini_batches(
+        client,
+        texts,
+        batch_size=BATCH_SIZE,
+        is_retryable=lambda error: (
+            isinstance(error, ClientError)
+            and "RESOURCE_EXHAUSTED" in str(error)
+        ),
+        on_retry_countdown=show_retry_countdown,
+    )
+    if countdown_placeholder is not None:
+        countdown_placeholder.empty()
 
     print(f"saving gemini embeddings {label} {embeddings.shape}")
     np.savez(f"{label}.npz", embeddings=embeddings)
@@ -65,36 +65,21 @@ def embed_csv_dataset(dataset_name, facts_csv, qa_csv, generate_gemini_embedding
         print(f"Dataset '{dataset_name}' already exists, overwriting...")
         clear_existing_dataset_files(dataset_name)
 
-    # Facts CSV:
-    # col 0 = context
-    with open(facts_csv, encoding='utf-8') as f:
-        facts = reader(f)
-        contexts = [row[0] for row in facts][1:]
+    dataset = load_csv_dataset(
+        facts_csv,
+        qa_csv,
+        add_missing_contexts=True,
+    )
+    for context in dataset.added_contexts:
+        print(f"Context from Q&A file missing:\n{context}. Adding to facts list")
 
-    # Q&A CSV:
-    # col 0 = question
-    # col 1 = matching context
-    with open(qa_csv, encoding='utf-8') as f:
-        rows = list(reader(f))
-
-        questions = [row[0] for row in rows[1:]]
-        most_relevant = [row[1] for row in rows[1:]]
-
-    # if contexts in qanda not in facts, add them
-    seen = set(contexts)
-    for context in most_relevant:
-        if context not in seen:
-            contexts.append(context)
-            seen.add(context)
-            print(f"Context from Q&A file missing:\n{context}. Adding to facts list")
-    context_to_index = {context: i for i, context in enumerate(contexts)}
-
-    most_relevant_indices = [
-        context_to_index[context]
-        for context in most_relevant
-    ]
-
-    embed_dataset(dataset_name, questions, contexts, most_relevant_indices, generate_gemini_embeddings)
+    embed_dataset(
+        dataset_name,
+        list(dataset.questions),
+        list(dataset.contexts),
+        list(dataset.most_relevant),
+        generate_gemini_embeddings,
+    )
 
 def clear_existing_dataset_files(dataset_name):
     """Remove a previously generated dataset + its embeddings, so it can be regenerated from scratch."""
@@ -136,12 +121,7 @@ def embed_dataset(dataset_name, questions, contexts, most_relevant_context, gene
     embed_sentence_transformer(model, contexts, f"embeddings/{dataset_name}_contexts_all-mpnet-base-v2.npz")
 
 def embed_sentence_transformer(model, texts, label):
-    embeddings = model.encode(
-        texts,
-        convert_to_numpy=True,
-        show_progress_bar=True,
-        normalize_embeddings=True
-    )
+    embeddings = encode_sentence_transformer(model, texts)
     np.savez(label, embeddings=embeddings)
 
 # if __name__ == "__main__":

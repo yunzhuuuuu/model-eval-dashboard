@@ -1,0 +1,11 @@
+{
+  "assistive_tech": {
+    "all-mpnet-base-v2": {"MRR": 0.8531, "Mean Rank": 1.95, "Recall@1": 0.75, "Recall@3": 0.95},
+    "multi-qa-MiniLM-L6-dot-v1": {"MRR": 0.8955, "Mean Rank": 1.75, "Recall@1": 0.85, "Recall@3": 0.95}
+  },
+  "cooking": {
+    "all-mpnet-base-v2": {"MRR": 0.9017, "Mean Rank": 1.35, "Recall@1": 0.85, "Recall@3": 0.95},
+    "gemini_3072": {"MRR": 0.975, "Mean Rank": 1.05, "Recall@1": 0.95, "Recall@3": 1.0},
+    "multi-qa-MiniLM-L6-dot-v1": {"MRR": 0.9571, "Mean Rank": 1.3, "Recall@1": 0.95, "Recall@3": 0.95}
+  }
+}

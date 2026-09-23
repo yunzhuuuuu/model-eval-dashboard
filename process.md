@@ -40,10 +40,10 @@ The new interface will additionally show job progress, recoverable failures, and
 
 ### Stage 2 - Tested evaluation core
 
-- [ ] Extract CSV parsing and validation from Streamlit.
-- [ ] Separate embedding, ranking, and metrics into framework-independent Python modules.
-- [ ] Add tests for validation and all four metrics.
-- [ ] Produce baseline results from the current implementation for parity comparison.
+- [x] Extract CSV parsing and validation from Streamlit.
+- [x] Separate embedding, ranking, and metrics into framework-independent Python modules.
+- [x] Add tests for validation and all four metrics.
+- [x] Produce baseline results from the current implementation for parity comparison.
 
 ### Stage 3 - Durable job system
 
@@ -67,6 +67,14 @@ The new interface will additionally show job progress, recoverable failures, and
 - [ ] Commit and push the reviewed source to GitHub.
 - [ ] Deploy a Vercel preview, verify it, and promote it to production.
 
+## Verification
+
+Run the framework-independent unit and local parity tests with:
+
+```sh
+make test
+```
+
 ## Current findings
 
 - The current folder is approximately 632 MB, mostly generated data and embeddings.
@@ -79,3 +87,4 @@ The new interface will additionally show job progress, recoverable failures, and
 ## Change log
 
 - 2026-09-23: Created this process record and established feature parity as a release requirement.
+- 2026-09-23: Completed Stage 2 with framework-independent CSV, embedding, ranking, and metric modules plus 12 passing tests.

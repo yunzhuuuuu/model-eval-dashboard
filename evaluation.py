@@ -1,8 +1,8 @@
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 from collections import defaultdict
 import pandas as pd
 import os
+from evaluation_core import metrics as core_metrics
 
 MODELS = [
     "gemini_3072",
@@ -10,7 +10,7 @@ MODELS = [
     "multi-qa-MiniLM-L6-dot-v1"
 ]
 
-AVAILABLE_METRICS = ["Recall@1", "Recall@3", "Mean Rank", "MRR"]
+AVAILABLE_METRICS = list(core_metrics.AVAILABLE_METRICS)
 
 # Session-scoped uploaded datasets are stored on disk with this separator in their filename
 SESSION_SEPARATOR = "__"
@@ -55,11 +55,7 @@ def load_datasets(session_id=None):
 
 # generate similarity rankings
 def calculate_similarities(question_embeddings, context_embeddings):
-    similarities = cosine_similarity(question_embeddings, context_embeddings)
-    rankings = np.zeros(similarities.shape, np.int32)
-    for i in range(similarities.shape[0]):
-        rankings[i, :] = np.argsort(-similarities[i, :])
-    return rankings
+    return core_metrics.rank_by_cosine_similarity(question_embeddings, context_embeddings)
 
 def load_rankings(session_id=None):
     all_rankings = defaultdict(dict)
@@ -79,39 +75,18 @@ def load_rankings(session_id=None):
 
 # evaluation methods
 def recall_at_k(rankings, most_relevant, k):
-    hits = 0
-    for q in range(len(most_relevant)):
-        if most_relevant[q] in rankings[q, :k]:
-            hits += 1
-    return hits / len(most_relevant)
+    return core_metrics.recall_at_k(rankings, most_relevant, k)
 
 def mean_reciprocal_rank(rankings, most_relevant):
-    rr_sum = 0
-    for q in range(len(most_relevant)):
-        rank = np.where(rankings[q] == most_relevant[q])[0][0]
-        rr_sum += 1 / (rank + 1)
-    return rr_sum / len(most_relevant)
+    return core_metrics.mean_reciprocal_rank(rankings, most_relevant)
 
 def mean_rank(rankings, most_relevant):
     """Average 1-indexed position of the correct context across all questions."""
-    rank_sum = 0
-    for q in range(len(most_relevant)):
-        rank = np.where(rankings[q] == most_relevant[q])[0][0]
-        rank_sum += (rank + 1)
-    return rank_sum / len(most_relevant)
+    return core_metrics.mean_rank(rankings, most_relevant)
 
 # maps metric name to function that computes it from (rankings, most_relevant)
 def compute_metric(metric_name, rankings, most_relevant):
-    if metric_name == "Recall@1":
-        return recall_at_k(rankings, most_relevant, 1)
-    elif metric_name == "Recall@3":
-        return recall_at_k(rankings, most_relevant, 3)
-    elif metric_name == "MRR":
-        return mean_reciprocal_rank(rankings, most_relevant)
-    elif metric_name == "Mean Rank":
-        return mean_rank(rankings, most_relevant)
-    else:
-        raise ValueError(f"Unknown metric: {metric_name}")
+    return core_metrics.compute_metric(metric_name, rankings, most_relevant)
 
 # main
 def build_results_tables(selected_metrics=None, session_id=None):
