@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "test:web": "vitest run",
     "check:web": "npm run lint && npm run typecheck && npm run test:web && npm run build",
-    "export:shared": "python3 -m scripts.export_shared_data"
+    "export:shared": "python3 -m scripts.export_shared_data",
+    "smoke:production": "node scripts/smoke_production.mjs"
   },
   "dependencies": {
     "@vercel/blob": "2.8.0",

@@ -39,3 +39,8 @@ results/
 # OS/editor files
 .DS_Store
 Thumbs.db
+.vercel
+.env*
+.agents/
+.claude/
+skills-lock.json

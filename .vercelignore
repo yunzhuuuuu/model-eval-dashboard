@@ -1,0 +1,10 @@
+# Deploy only the Next.js application and static assets.
+/*
+!package.json
+!package-lock.json
+!next.config.ts
+!next-env.d.ts
+!tsconfig.json
+!src
+!public
+!.vercelignore

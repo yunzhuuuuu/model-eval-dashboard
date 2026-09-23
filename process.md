@@ -62,11 +62,13 @@ The new interface will additionally show job progress, recoverable failures, and
 ### Stage 5 - Verification and release
 
 - [x] Confirm numerical parity on shared datasets.
-- [ ] Test concurrent users, ownership boundaries, failures, and cleanup.
+- [x] Test production session ownership boundaries and cross-origin rejection.
+- [ ] Test concurrent job limits, retry failures, and expiry cleanup on the hosted worker.
 - [x] Pass Python tests plus frontend lint, type-check, test, and production build.
 - [x] Commit the reviewed source locally.
-- [ ] Push the reviewed source to GitHub.
-- [ ] Deploy a Vercel preview, verify it, and promote it to production.
+- [x] Push the reviewed source to GitHub.
+- [x] Deploy and verify the Vercel production application.
+- [ ] Deploy the persistent Python evaluation worker.
 
 ## Verification
 
@@ -84,15 +86,18 @@ npm run check:web
 
 ## Current findings
 
-- The current folder is approximately 632 MB, mostly generated data and embeddings.
-- The preprocessed-data archive alone is approximately 230 MB.
+- Legacy generated data and embeddings account for approximately 632 MB and are excluded from Vercel with an explicit deployment allowlist.
+- The preprocessed-data archive alone is approximately 230 MB and remains local-only.
 - Upload and evaluation currently happen synchronously inside the Streamlit request.
 - User isolation currently relies on a random session prefix in local filenames.
 - The local folder did not contain Git metadata before Stage 1.
 - The Gemini secret file is local-only and must never enter version control.
-- The initial Postgres migration is authored but cannot be live-applied until a database is provisioned.
-- The Next.js site and static examples launch locally; private uploads correctly report that Postgres is unconfigured.
-- Live upload, ownership, cleanup, and worker integration still require provisioned Postgres and private Blob services.
+- The initial Postgres migration is applied to a free Neon database in `iad1`.
+- A private Vercel Blob store is connected to production, preview, and development.
+- The production site is live at `https://model-eval-dashboard-black.vercel.app`.
+- A production smoke test created a session, uploaded both private CSVs, queued an evaluation, and completed all three model results through the worker.
+- A second session could not list or fetch the first session's dataset, and a cross-origin write was rejected.
+- The worker is verified locally against production services but still needs a persistent container host for unattended jobs.
 
 ## Change log
 
@@ -100,3 +105,4 @@ npm run check:web
 - 2026-09-23: Completed Stage 2 with framework-independent CSV, embedding, ranking, and metric modules plus 12 passing tests.
 - 2026-09-23: Completed Stage 3 with the Postgres job schema, private Blob adapter, restart-safe worker, cleanup and retry handling, memory-bounded scoring, and 21 passing tests.
 - 2026-09-23: Completed Stage 4 with all four Next.js sections, signed anonymous sessions, direct private uploads, browser CSV validation, job polling, example-data export, selectable results, 5 frontend tests, and a passing production build.
+- 2026-09-23: Released the Vercel web app with Neon and private Blob, verified production isolation, and completed a three-model production smoke evaluation through the worker.

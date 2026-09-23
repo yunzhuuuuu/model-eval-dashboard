@@ -23,6 +23,8 @@ A website for learning how retrieval-based machine learning systems work, hands-
 
 The original Streamlit app remains in `app.py` as a reference while the new release is verified.
 
+The production web app is available at <https://model-eval-dashboard-black.vercel.app>.
+
 ## Run the web app locally
 
 1. Install the Node dependencies:
@@ -56,6 +58,7 @@ The worker needs the same `DATABASE_URL` and `BLOB_READ_WRITE_TOKEN`, plus a ser
 ```sh
 python3 -m venv .venv
 . .venv/bin/activate
+pip install torch==2.14.0+cpu --index-url https://download.pytorch.org/whl/cpu
 pip install -r worker-requirements.txt
 python -m worker
 ```
@@ -86,5 +89,9 @@ npm run export:shared
 4. Apply the database migration.
 5. Deploy the Python worker to a persistent container host with the worker environment variables.
 6. Verify a preview deployment before promoting it to production.
+
+The Vercel web app, free Neon database, private Blob store, migration, and a
+complete three-model smoke evaluation are verified. A persistent host for the
+Python worker is still required before unattended evaluations are available.
 
 The deployment and live service checks are tracked in `process.md`.
