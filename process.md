@@ -110,4 +110,4 @@ npm run check:web
 - 2026-09-23: Connected encrypted GitHub worker secrets and verified the queue-drain workflow against production.
 - 2026-09-23: Restored the original top-tab information architecture, simplified the Introduction into clear learning, background, and task sections, removed the two decorative privacy/status callouts, and reduced tab-page title sizes.
 - 2026-09-23: Removed the brand header, widened all tab content, expanded page headings to the full content width, moved the no-code note under the learning subtitle, and clarified the retrieval-model background link.
-- 2026-09-23: Restored moderate centered side margins at a 1500px content maximum and merged the no-code guidance into the learning subtitle.
+- 2026-09-23: Restored generous centered side margins at a 1250px content maximum and merged the no-code guidance into the learning subtitle.

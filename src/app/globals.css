@@ -180,7 +180,7 @@ code {
 main {
   width: 100%;
   min-width: 0;
-  max-width: 1500px;
+  max-width: 1250px;
   margin: 0 auto;
   padding: 3rem clamp(1rem, 2.5vw, 3rem) 5rem;
   outline: none;
