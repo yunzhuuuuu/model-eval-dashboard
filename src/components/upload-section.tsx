@@ -222,12 +222,21 @@ export function UploadSection({
               Every note must be unique.
             </p>
           </div>
-          <Image
-            src="/examples/contexts.png"
-            alt='Example spreadsheet with a "Note" header and one note per row'
-            width={694}
-            height={324}
-          />
+          <a
+            className="requirement-image-link"
+            href="/examples/contexts.png"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open the full-size context.csv example in a new tab"
+          >
+            <Image
+              src="/examples/contexts.png"
+              alt='Example spreadsheet with a "Note" header and one note per row'
+              width={694}
+              height={324}
+            />
+            <span>View full-size example ↗</span>
+          </a>
         </article>
         <article className="content-card requirement-card">
           <div className="file-number">2</div>
@@ -239,12 +248,21 @@ export function UploadSection({
               The relevant note must exactly match one from context.csv.
             </p>
           </div>
-          <Image
-            src="/examples/qanda.png"
-            alt='Example spreadsheet with "Question" and "Relevant Note" headers'
-            width={1330}
-            height={419}
-          />
+          <a
+            className="requirement-image-link"
+            href="/examples/qanda.png"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open the full-size qanda.csv example in a new tab"
+          >
+            <Image
+              src="/examples/qanda.png"
+              alt='Example spreadsheet with "Question" and "Relevant Note" headers'
+              width={1330}
+              height={419}
+            />
+            <span>View full-size example ↗</span>
+          </a>
         </article>
       </section>
 
@@ -257,6 +275,14 @@ export function UploadSection({
             </span>
             <span aria-hidden="true">+</span>
           </summary>
+          <div className="prompt-intro">
+            <p>
+              You can create both CSV files yourself, ask an LLM to generate
+              them, or try both approaches and compare the evaluation results.
+              Either way, keep the notes and questions realistic and relevant to
+              your topic, and manually check every question-note match.
+            </p>
+          </div>
           <div className="prompt-copy">
             <p>
               I&apos;m building a test dataset for a note-taking app&apos;s search
