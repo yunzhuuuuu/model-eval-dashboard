@@ -22,6 +22,9 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
             This dashboard is designed to help students explore how dataset
             design influences the performance of retrieval models.
           </p>
+          <p className="no-code-note">
+            You only need Excel or Google Sheets—the activity does not involve coding.
+          </p>
         </div>
         <ul className="learning-list">
           <li>
@@ -55,9 +58,6 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
             </div>
           </li>
         </ul>
-        <p className="no-code-note">
-          You only need Excel or Google Sheets—the activity does not involve coding.
-        </p>
       </section>
 
       <section className="content-card intro-section intro-background">
@@ -81,7 +81,7 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
             target="_blank"
             rel="noreferrer"
           >
-            Read the 2-page background
+            Read the 2-page background about retrieval models and embeddings
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
         </div>

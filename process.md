@@ -109,3 +109,4 @@ npm run check:web
 - 2026-09-23: Added a bounded queue-drain mode and five-minute GitHub Actions worker workflow.
 - 2026-09-23: Connected encrypted GitHub worker secrets and verified the queue-drain workflow against production.
 - 2026-09-23: Restored the original top-tab information architecture, simplified the Introduction into clear learning, background, and task sections, removed the two decorative privacy/status callouts, and reduced tab-page title sizes.
+- 2026-09-23: Removed the brand header, widened all tab content, expanded page headings to the full content width, moved the no-code note under the learning subtitle, and clarified the retrieval-model background link.

@@ -120,18 +120,6 @@ export function Dashboard() {
 
   return (
     <div className="app-shell">
-      <header className="site-header">
-        <a className="brand" href="#main" aria-label="Retrieval Lab home">
-          <span className="brand-mark" aria-hidden="true">
-            RL
-          </span>
-          <span>
-            <strong>Retrieval Lab</strong>
-            <small>Model evaluation studio</small>
-          </span>
-        </a>
-      </header>
-
       <div className="workspace">
         <nav className="top-tabs" aria-label="Dashboard sections">
           <div className="section-nav" role="tablist" aria-orientation="horizontal">

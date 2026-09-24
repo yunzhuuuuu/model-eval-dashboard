@@ -108,69 +108,19 @@ code {
   min-height: 100vh;
 }
 
-.site-header {
-  position: sticky;
-  z-index: 20;
-  top: 0;
-  display: flex;
-  height: 78px;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(23, 37, 34, 0.1);
-  background: rgba(247, 245, 239, 0.9);
-  padding: 0 3vw;
-  backdrop-filter: blur(16px);
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  color: var(--ink);
-  gap: 0.8rem;
-  text-decoration: none;
-}
-
-.brand > span:last-child {
-  display: grid;
-}
-
-.brand strong {
-  font-size: 0.98rem;
-  letter-spacing: -0.02em;
-}
-
-.brand small {
-  color: var(--muted);
-  font-size: 0.72rem;
-}
-
-.brand-mark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border-radius: 13px;
-  background: var(--teal);
-  color: white;
-  font-family: Georgia, serif;
-  font-size: 0.92rem;
-  font-weight: 700;
-}
-
 .workspace {
-  width: min(1500px, 100%);
-  min-height: calc(100vh - 78px);
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .top-tabs {
   position: sticky;
   z-index: 15;
-  top: 78px;
+  top: 0;
   overflow-x: auto;
   border-bottom: 1px solid rgba(23, 37, 34, 0.1);
   background: rgba(247, 245, 239, 0.96);
-  padding: 0 3vw;
+  padding: 0 clamp(0.75rem, 2vw, 2rem);
   backdrop-filter: blur(14px);
 }
 
@@ -185,7 +135,8 @@ code {
 
 .section-nav {
   display: flex;
-  width: min(1120px, 100%);
+  width: 100%;
+  justify-content: center;
   margin: 0 auto;
 }
 
@@ -229,9 +180,7 @@ code {
 main {
   width: 100%;
   min-width: 0;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 3.2rem clamp(1.2rem, 4vw, 4.5rem) 5rem;
+  padding: 3rem clamp(1rem, 2.5vw, 3rem) 5rem;
   outline: none;
 }
 
@@ -333,17 +282,18 @@ main {
 }
 
 .page-heading {
-  max-width: 850px;
+  width: 100%;
+  max-width: none;
   padding: 1.4rem 0 0.6rem;
 }
 
 .page-heading h1 {
-  max-width: 790px;
+  max-width: none;
 }
 
 .page-heading > p:last-child,
 .results-heading > div > p:last-child {
-  max-width: 700px;
+  max-width: 1000px;
   color: var(--muted);
   font-size: 1.08rem;
 }
@@ -1566,22 +1516,16 @@ progress::-moz-progress-bar {
 }
 
 @media (max-width: 720px) {
-  .site-header {
-    height: 68px;
-    padding: 0 1rem;
-  }
-
   .header-note {
     display: none;
   }
 
   .workspace {
-    min-height: calc(100vh - 68px);
+    min-height: 100vh;
   }
 
-  .sidebar,
   .top-tabs {
-    top: 68px;
+    top: 0;
   }
 
   .section-nav button span {
