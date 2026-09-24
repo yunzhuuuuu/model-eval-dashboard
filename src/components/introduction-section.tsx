@@ -20,10 +20,8 @@ export function IntroductionSection({ onContinue }: IntroductionProps) {
           <h2>What you will learn</h2>
           <p>
             This dashboard is designed to help students explore how dataset
-            design influences the performance of retrieval models.
-          </p>
-          <p className="no-code-note">
-            You only need Excel or Google Sheets—the activity does not involve coding.
+            design influences the performance of retrieval models. You only need
+            Excel or Google Sheets—the activity does not involve coding.
           </p>
         </div>
         <ul className="learning-list">
